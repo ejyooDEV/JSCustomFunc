@@ -9,7 +9,7 @@ removeDuplicatesByArray(array, key) {
 
     for (var item of array) {
         if (!uniqueIds.has(item[key])) {
-            uniqueIds.add(item.TrackerTypeId);
+            uniqueIds.add(item[key]);
             uniqueObjects.push(item);
         }
     }
