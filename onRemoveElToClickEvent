@@ -1,0 +1,8 @@
+var element = '<div>removeEventElement</div>;
+
+document.addEventListener('click', function handlePageClick(event) {
+  if (!element.contains(event.target)) {
+    div.destroy();
+    document.removeEventListener('click', handlePageClick);
+  }
+});
