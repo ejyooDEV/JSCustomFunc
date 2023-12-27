@@ -7,8 +7,13 @@ afterrender: function () {
   var me = this;
   var vm = me.getViewModel();
   var model = vm.get('model');
+
+  var callBack = function (isProcessWork) {
+    // Business logic
+  };
   var config = {
-    model: model
+    model: model,
+    callBack: callBack
   };
   me.processCheck(config);
 },
@@ -17,7 +22,8 @@ afterrender: function () {
 /**
  * model : 체크 대상 모델
  * checkKeys : 체크 키
- * customValues : 커스텀 Object 담는 곳 (예외처리용)
+ * customParams : 커스텀 Object 담는 곳 (예외처리용)
+ * callBack: 후처리 함수
  */
 //#endregion
 
@@ -32,10 +38,13 @@ processCheck: function (config) {
             me.processResolver(config);
             break;
         case "BType":
-            break;
         case "CType":
+            config['checkKeys'] = ['fields'];
+            me.processResolver(config);
             break;
         default:
+            config['checkKeys'] = [];
+            me.processResolver(config);
             break;
     }
 },
@@ -52,20 +61,26 @@ processResolver: function (config) {
                 processFunctions.push(me.lockCheck);
                 break;
             case "relation":
-                break;
             case "upDown":
-                break;
             case "fields":
                 break;
         }
     }
 
     Promise.all(processFunctions.map(f => f(config))).then((values) => {
+        var isProcessWork = true;
         for(var i = 0; i < values.length; i++) {
             if (values[i]) {
                 Ext.Msg.alert('Alert', values[i]);
+                isProcessWork = false;
                 break;
             }
+        }
+
+        if (!isProcessWork) return;
+
+        if (config['callBack'] && Ext.isFunction(config['callBack'])) {
+            config['callBack'](isProcessWork);
         }
     });
 },
