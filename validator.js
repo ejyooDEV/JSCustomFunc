@@ -1,6 +1,10 @@
 /**
 * 설계자료 
 * Miro : https://miro.com/app/board/uXjVN-oGjfM=/
+*
+* 사용 경우
+* - 체크하는 조건에 대해 모두 검증해야 하는 경우 사용
+* (검증 도중 수행을 종료해야하는 경우 적합하지 않음)
 */
 
 afterrender: function () {
