@@ -1,4 +1,7 @@
-// Miro : https://miro.com/app/board/uXjVN-oGjfM=/
+/**
+* 설계자료 
+* Miro : https://miro.com/app/board/uXjVN-oGjfM=/
+*/
 
 afterrender: function () {
   var me = this;
